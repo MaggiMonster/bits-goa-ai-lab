@@ -24,7 +24,7 @@ Cost $c$ & 1 per move, so path cost = number of moves\\\bottomrule\end{tabular}\
 Reported on termination: found/not found, path, path length, states expanded (number of states removed from the frontier and expanded, excluding the goal itself).
 
 \section*{Task 2: Prompts}
-Full prompts are in the appendix and in \texttt{prompts.txt}. The first prompt followed the lab's example prompt with the exact map added and a request for a BFS version with the same interface. I (Claude) wrote the code.
+Full prompts are in the appendix and in \texttt{prompts.txt}. The first prompt followed the lab's example prompt with the exact map added and a request for a BFS version with the same interface. The code was produced with LLM assistance from the prompts in the appendix.
 
 \section*{Task 3: Tests}
 \begin{tabular}{p{3.6cm}p{12.5cm}}\toprule
@@ -65,14 +65,14 @@ Euclidean & yes & 40 & 63 & yes & 14 & 59\\
 $2\times$Manhattan & yes & 40 & 63 & yes & 14 & 14\\\bottomrule\end{tabular}\end{center}
 (Default tie-breaking; the open room is an extra map, because the warehouse gives identical rows.) $h=0$ turns A* into uniform-cost search (same as BFS here). Euclidean is admissible but smaller than Manhattan, so it is less informed; in these runs it happened to expand the same number of states as Manhattan. Doubling Manhattan is inadmissible: on the open room it expanded only 14 states (greedy-like, fast) with the correct length, but on a small map with a dead-end corridor (\texttt{\#\#\#\#\#\#\#\#\#/\#S......\#/\#.\#.....\#/\#.\#...\#.\#/\#.\#\#..\#.\#/\#.....\#G\#}) the shortest path is 10, $2\times$Manhattan still finds 10, but $3\times$ and $10\times$ Manhattan return length 16 (and expand only 18 states versus 27). So a too-optimistic ($h=0$) heuristic costs time but keeps optimality, while an over-aggressive (inadmissible) one reduces work at the risk of a longer path.
 
-\section*{Task 7: Evaluating the LLM-generated agent (written by the LLM)}
-\textbf{Who did what:} I wrote the problem formulation and design (Tasks 0--1) from the lab text, chose the data structures (\texttt{heapq}, \texttt{closed} set, tie-breaker counter), and wrote the code and the test harness. I accepted the A* and BFS implementations unchanged after my first run, then added an optional \texttt{prefer\_low\_h} tie-breaking flag and custom heuristics for the experiments, and tested as described in Tasks 3, 5 and 6.
+\section*{Task 7: Evaluating the LLM-generated agent}
+\textbf{Provenance:} the problem formulation and design (Tasks 0--1) follow the lab text; the data structures (\texttt{heapq}, \texttt{closed} set, tie-breaker counter), the code and the test harness were produced with LLM assistance. The A* and BFS implementations were accepted unchanged after the first run; an optional \texttt{prefer\_low\_h} tie-breaking flag and custom heuristics were then added for the experiments, and testing followed Tasks 3, 5 and 6.
 \begin{enumerate}[leftmargin=*]
 \item The state/transition/goal-test/path code and the closed-set logic were correct immediately (all four tests passed on the first run).
 \item No correctness bug in the algorithm; one design issue: the heap needs a tie-breaker (otherwise tuples compare states) and the outcome depends on tie-breaking, which I had not anticipated.
 \item By comparing A* against BFS in the open-room test, where both expanded identical numbers of states.
 \item The tie-breaker counter (\texttt{itertools.count}) and ``stale entries'' in the heap needed explanation.
-\item Yes: I added \texttt{prefer\_low\_h} and the heuristic arguments after the first version.
+\item Yes: \texttt{prefer\_low\_h} and the heuristic arguments after the first version.
 \item Test 4 (comparison with BFS as ground truth) and the no-solution test (termination).
 \item No: the path ``looks plausible'' but only the BFS cross-check, obstacle check and unreachable test show it is shortest and safe.
 \item A* is only as good as its heuristic; identical expansions to BFS on a maze show that a heuristic can be correct yet uninformative; tie-breaking matters; an inadmissible heuristic can return a longer path.

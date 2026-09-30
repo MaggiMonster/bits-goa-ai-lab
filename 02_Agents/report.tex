@@ -61,7 +61,7 @@ The program should
 Also write a small test file that checks the path is valid, that its length is
 shortest, and that an unreachable goal prints the no-path message.
 \end{Verbatim}
-I (Claude) wrote the code from this prompt.
+The code was produced with LLM assistance from this prompt.
 
 \textbf{Test results.} \texttt{warehouse\_agent.py} ran without errors; it found a 20-move path (\texttt{Right x3, Down, Right x3, Up, Right x12}) which avoids all \texttt{\#}. \texttt{test\_agent.py} confirmed: path ends on \texttt{G}, never enters an obstacle, every step is one cell; its length equals an independently computed shortest distance (20); and a blocked map prints ``No collision-free path exists''. Path drawn on the map:
 \begin{Verbatim}

@@ -36,9 +36,9 @@ Design: 2 inputs $\to$ 2 hidden units (tanh; sigmoid and ReLU tried later) $\to$
 \textit{Hidden units get no targets:} what each computes is determined only by the output-layer loss propagated backwards through the chain rule; backprop supplies each hidden unit a learning signal $\partial L/\partial h$.
 
 \section*{Task 3: LLM prompts and generated code}
-I (Claude) drafted the prompts below, wrote the code from them, inspected it, and ran it. Forward pass: \texttt{forward()}; scalar loss: \texttt{criterion(logits,y)}; reverse-mode AD: \texttt{loss.backward()}; parameter update: \texttt{optimizer.step()}.
+The prompts below were used with LLM assistance to produce the code, which was inspected and run. Forward pass: \texttt{forward()}; scalar loss: \texttt{criterion(logits,y)}; reverse-mode AD: \texttt{loss.backward()}; parameter update: \texttt{optimizer.step()}.
 
-\textbf{Two changes I made after my first run of the generated code:} (1) I added a progress print of the loss every 500 steps, to see the loss decreasing rather than only the final number; (2) I added an \texttt{assert torch.isfinite(loss)} guard inside the training loop to catch NaN/inf immediately. Neither changes the architecture, data, loss or optimiser. The logged losses for seed 0 were 0.7152 (step 0), 0.00194 (500), 0.00064 (1000), 0.00032 (1500), 0.00019 (2000), 0.00012 (2500).
+\textbf{Two changes made after the first run of the generated code:} (1) a progress print of the loss every 500 steps, to see the loss decreasing rather than only the final number; (2) an \texttt{assert torch.isfinite(loss)} guard inside the training loop to catch NaN/inf immediately. Neither changes the architecture, data, loss or optimiser. The logged losses for seed 0 were 0.7152 (step 0), 0.00194 (500), 0.00064 (1000), 0.00032 (1500), 0.00019 (2000), 0.00012 (2500).
 
 \subsection*{Prompt 1 (Task 3)}
 \begin{Verbatim}
