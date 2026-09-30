@@ -1,0 +1,20 @@
+Prompt 1 (Task 2: planner)
+I want to implement a simple planning agent in Python.
+Represent a state as a set of logical propositions.
+Each action should contain: a name; positive preconditions; negative preconditions; positive effects; negative effects.
+An action is applicable if all of its preconditions are satisfied by the current state.
+When an action is applied: 1. remove its negative effects from the state; 2. add its positive effects to the state.
+Use breadth-first search to find a sequence of actions that achieves a specified goal.
+The program should also: detect when no plan exists; print the resulting sequence of actions; print the states reached after each action.
+Explain the implementation and identify any assumptions you make.
+Run the generated program on the warehouse problem.
+(Warehouse: locations A, B, C; Move along A-B, B-A, B-C, C-B; PickUp(Package,L) needs At(Robot,L), At(Package,L), effects -At(Package,L), +Holding(Package); Drop(Package,L) needs At(Robot,L), Holding(Package), effects -Holding(Package), +At(Package,L). Initial {At(Robot,A), At(Package,A)}, goal {At(Package,C)}.)
+
+Prompt 2 (Task 3: tests)
+Add tests: A) the original warehouse problem, verifying every action of the returned plan by re-executing it; B) remove PickUp and check the planner reports "No plan found"; C) add an extra Move(A,C) for the robot and check the planner does not treat Robot at C as Package at C.
+
+Prompt 3 (Task 5: LLM explanation of validity)
+For every action in the plan, identify its preconditions and show that those preconditions are satisfied in the state in which the action is executed.
+
+Prompt 4 (Tasks 6-8: Prolog)
+Write planner.pl with the connected/2 facts, can_move/2 and valid_move/2 rules, the wet_road/slippery/reduce_speed program, and a valid_path/1 rule that checks a list of locations; give me a swipl command that runs the queries and prints true/false.

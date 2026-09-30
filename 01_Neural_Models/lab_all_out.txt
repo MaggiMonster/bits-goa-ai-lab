@@ -1,0 +1,109 @@
+
+##### task3_xor
+step    0  loss 0.715159
+step  500  loss 0.001940
+step 1000  loss 0.000638
+step 1500  loss 0.000319
+step 2000  loss 0.000189
+step 2500  loss 0.000122
+Initial loss: 0.715159
+Final loss:   0.000083
+Probabilities: [5.931846681050956e-05, 0.9998986721038818, 0.9998774528503418, 5.0744012696668506e-05]
+Labels (>=0.5): [0.0, 1.0, 1.0, 0.0]
+All 4 correct: True
+layer1.weight.grad =
+ tensor([[ 2.9268e-06, -3.5338e-06],
+        [-5.9643e-06,  3.2084e-06]])
+
+##### task4_diagnostics
+=== Part A: seeds 0-4 ===
+seed 0: initial 0.7152  final 0.000083  4/4 correct: True
+seed 1: initial 0.7116  final 0.346595  4/4 correct: False
+seed 2: initial 0.6932  final 0.000090  4/4 correct: True
+seed 3: initial 0.7274  final 0.000112  4/4 correct: True
+seed 4: initial 0.7582  final 0.000130  4/4 correct: True
+
+=== Part B: gradient check (seed 0, at init) ===
+autograd layer1.weight.grad =
+ tensor([[ 0.0005,  0.0006],
+        [-0.0426, -0.0448]])
+finite-difference =
+ tensor([[ 0.0009,  0.0009],
+        [-0.0423, -0.0447]])
+max abs diff: 0.0003886704798787832
+average of 4 per-example grads =
+ tensor([[ 0.0005,  0.0006],
+        [-0.0426, -0.0448]])
+equals mean-loss grad: True
+
+=== Part C: all-zero initialisation ===
+step    0: row0=[0.0, 0.0] row1=[0.0, 0.0] identical=True
+step    1: row0=[0.0, 0.0] row1=[0.0, 0.0] identical=True
+step    2: row0=[0.0, 0.0] row1=[0.0, 0.0] identical=True
+step    5: row0=[0.0, 0.0] row1=[0.0, 0.0] identical=True
+step   10: row0=[0.0, 0.0] row1=[0.0, 0.0] identical=True
+step  100: row0=[0.0, 0.0] row1=[0.0, 0.0] identical=True
+step 3000: row0=[0.0, 0.0] row1=[0.0, 0.0] identical=True
+final loss 0.693147  probs [0.5, 0.5, 0.5, 0.5]  4/4 correct: False
+
+##### task4_activations
+Hidden activation | Final loss | 4/4 correct? | Early ||grad W1||_2   (seed 0)
+Sigmoid           | 0.477422   | False        | 0.000891
+Tanh              | 0.000083   | True         | 0.061785
+ReLU              | 0.693147   | False        | 0.001699
+
+Final hidden pre-activations / activations (seed 0):
+--- Sigmoid
+pre-activation:
+tensor([[  0.9184,  -2.0361],
+        [-11.1824,  11.8330],
+        [-11.0941,  11.8731],
+        [-23.1948,  25.7422]])
+activation:
+tensor([[7.1471e-01, 1.1546e-01],
+        [1.3917e-05, 9.9999e-01],
+        [1.5202e-05, 9.9999e-01],
+        [8.4454e-11, 1.0000e+00]])
+--- Tanh
+pre-activation:
+tensor([[-2.4870, -2.1352],
+        [ 2.5072, -7.0637],
+        [-7.5522,  2.4215],
+        [-2.5580, -2.5070]])
+activation:
+tensor([[-0.9863, -0.9724],
+        [ 0.9868, -1.0000],
+        [-1.0000,  0.9844],
+        [-0.9881, -0.9868]])
+--- ReLU
+pre-activation:
+tensor([[-0.4311, -0.4009],
+        [-0.2105, -0.9212],
+        [-0.5577, -0.9828],
+        [-0.3371, -1.5032]])
+activation:
+tensor([[0., 0.],
+        [0., 0.],
+        [0., 0.],
+        [0., 0.]])
+
+Success counts over seeds 0-9:
+Sigmoid: 4/10
+Tanh: 4/10
+ReLU: 3/10
+
+##### task5_multiclass
+Final weight matrix shape: (3, 2)
+Logits shape per example: (3,)
+Final loss: 3.886143531417474e-05
+Softmax probabilities:
+ tensor([[9.9995e-01, 4.8949e-05, 7.3595e-09],
+        [2.3397e-05, 9.9997e-01, 7.4549e-06],
+        [2.3177e-05, 9.9997e-01, 7.0238e-06],
+        [2.7497e-07, 4.5178e-05, 9.9995e-01]])
+Predicted classes: [0, 1, 1, 2]  targets: [0, 1, 1, 2]
+Example 1 probs: [2.3396543838316575e-05, 0.9999691247940063, 7.454899787262548e-06]  sum = 1.0
+dL/dlogits == (p - y)/N: True
+softmax(z+100) == softmax(z): True
+naive exp with +1000: [nan, nan, nan]
+max-subtracted with +1000: [0.9999510049819946, 4.894900121144019e-05, 7.359433507048152e-09]

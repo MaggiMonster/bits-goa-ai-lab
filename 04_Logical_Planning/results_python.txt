@@ -1,0 +1,40 @@
+Initially applicable actions: ['Move(A,B)', 'PickUp(Package,A)']
+--- Test A: solvable warehouse problem
+Initial: At(Package,A), At(Robot,A)
+Goal   : At(Package,C)
+Plan: PickUp(Package,A) -> Move(A,B) -> Move(B,C) -> Drop(Package,C)
+  S0: At(Package,A), At(Robot,A)
+  S1: At(Robot,A), Holding(Package)
+  S2: At(Robot,B), Holding(Package)
+  S3: At(Robot,C), Holding(Package)
+  S4: At(Package,C), At(Robot,C)
+Plan verified independently: True
+
+--- Test B: no PickUp action
+Initial: At(Package,A), At(Robot,A)
+Goal   : At(Package,C)
+No plan found
+
+--- Test C1: goal = Package at C, with extra Move(A,C) shortcut
+Initial: At(Package,A), At(Robot,A)
+Goal   : At(Package,C)
+Plan: PickUp(Package,A) -> Move(A,C) -> Drop(Package,C)
+  S0: At(Package,A), At(Robot,A)
+  S1: At(Robot,A), Holding(Package)
+  S2: At(Robot,C), Holding(Package)
+  S3: At(Package,C), At(Robot,C)
+Plan verified independently: True
+
+--- Test C2: goal = Robot at C (package need not move)
+Initial: At(Package,A), At(Robot,A)
+Goal   : At(Robot,C)
+Plan: Move(A,C)
+  S0: At(Package,A), At(Robot,A)
+  S1: At(Package,A), At(Robot,C)
+
+--- Test C3: extra Move(A,C), no PickUp, goal Package at C
+Initial: At(Package,A), At(Robot,A)
+Goal   : At(Package,C)
+No plan found
+
+Invalid plan (robot never picked up package) verifies as: False

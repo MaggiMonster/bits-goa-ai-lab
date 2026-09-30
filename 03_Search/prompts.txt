@@ -1,0 +1,27 @@
+Prompt 1 (Task 2: generate A*)
+I am implementing a simple goal-based search agent in Python.
+The environment is a grid represented by an ASCII map. The agent starts at S and must reach G. The symbols # represent obstacles and . represents free cells. The agent can move up, down, left, or right, and every movement has cost 1.
+Implement A* search.
+Use Manhattan distance as the heuristic: h(n) = |x - xG| + |y - yG|.
+Map:
+#################
+#S....#.........#
+#.###.#.#######.#
+#...#.#.......#.#
+###.#.#######.#.#
+#...#.........#.#
+#.###########.#.#
+#.............#G#
+#################
+The program should: represent grid positions as states; maintain an appropriate frontier; calculate g(n), h(n) and f(n); avoid repeatedly expanding the same state; reconstruct the path when the goal is reached; report the path and its length; report the number of states expanded.
+Keep the implementation simple and explain the main components of the code.
+Run the generated program on the warehouse map. Also give me a BFS version with the same interface and bookkeeping.
+
+Prompt 2 (Task 3: tests)
+Write tests for the program: (1) the lab map, checking the path starts at S, ends at G, never crosses '#', moves one cell per step; (2) trivial map #SG## ; (3) the unreachable-goal map from the lab, check it reports failure and terminates; (4) an open room with several shortest paths, compare A* length with BFS length.
+
+Prompt 3 (Task 5/6: comparison and heuristic experiments)
+Run BFS and A* on the same warehouse map and report solution found, path length, states expanded. Then rerun A* with h=0, Euclidean distance, and 2*Manhattan, reporting found / length / expanded. Also add an option to break f-ties toward lower h, and find a small map where an inflated heuristic gives a longer path than BFS.
+
+Prompt 4 (Task 6: explanation)
+Explain why Manhattan distance is an appropriate heuristic for a grid robot that can only move horizontally and vertically (admissible and consistent).

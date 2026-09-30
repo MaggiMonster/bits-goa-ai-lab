@@ -1,0 +1,54 @@
+=== Test 1: original warehouse ===
+Solution found. Length: 40  States expanded: 63
+Path: [(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (2, 5), (3, 5), (4, 5), (5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (5, 10), (5, 11), (5, 12), (5, 13), (4, 13), (3, 13), (3, 12), (3, 11), (3, 10), (3, 9), (3, 8), (3, 7), (2, 7), (1, 7), (1, 8), (1, 9), (1, 10), (1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (2, 15), (3, 15), (4, 15), (5, 15), (6, 15), (7, 15)]
+
+=== Test 2: trivial ===
+Solution found. Length: 1  States expanded: 1
+Path: [(1, 1), (1, 2)]
+
+=== Test 3: no solution ===
+A*: No solution found. States expanded: 9
+BFS: No solution found. States expanded: 9
+
+=== Test 4: alternative paths (open 5x5, S and G at opposite corners) ===
+A*  length 8 expanded 24
+BFS length 8 expanded 24
+A* length equals BFS (known optimal) length 8 -> shortest path confirmed
+
+=== Task 5: BFS vs A* on the warehouse ===
+BFS: found=True length=40 expanded=63
+A* : found=True length=40 expanded=63
+same path: True
+free cells (incl S,G): 64
+(also on open 7x7 map T4) BFS expanded 24  A* expanded 24
+
+=== Task 6: heuristic variants ===
+-- warehouse
+Manhattan    found=True length=40 expanded=63
+h=0          found=True length=40 expanded=63
+Euclidean    found=True length=40 expanded=63
+2*Manhattan  found=True length=40 expanded=63
+-- open 6x10 room with no walls (extra)
+Manhattan    found=True length=14 expanded=59
+h=0          found=True length=14 expanded=59
+Euclidean    found=True length=14 expanded=59
+2*Manhattan  found=True length=14 expanded=14
+
+=== A* tie-breaking (prefer lower h among equal f) ===
+warehouse                default tie-break expanded=63 length=40 | prefer low h expanded=63 length=40
+open 6x10 room           default tie-break expanded=59 length=14 | prefer low h expanded=14 length=14
+open 5x5 room (Test 4)   default tie-break expanded=24 length=8 | prefer low h expanded=8 length=8
+
+=== over-optimistic vs over-aggressive heuristics: a map where an inflated h gives a longer path ===
+BFS (optimal) length: 10
+h = 0*Manhattan: length=10 expanded=27
+h = 1*Manhattan: length=10 expanded=27
+h = 2*Manhattan: length=10 expanded=23
+h = 3*Manhattan: length=16 expanded=18
+h = 10*Manhattan: length=16 expanded=18
+--- A* (Manhattan)
+Solution found. Length: 40  States expanded: 63
+Path: [(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (2, 5), (3, 5), (4, 5), (5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (5, 10), (5, 11), (5, 12), (5, 13), (4, 13), (3, 13), (3, 12), (3, 11), (3, 10), (3, 9), (3, 8), (3, 7), (2, 7), (1, 7), (1, 8), (1, 9), (1, 10), (1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (2, 15), (3, 15), (4, 15), (5, 15), (6, 15), (7, 15)]
+--- BFS
+Solution found. Length: 40  States expanded: 63
+Path: [(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (2, 5), (3, 5), (4, 5), (5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (5, 10), (5, 11), (5, 12), (5, 13), (4, 13), (3, 13), (3, 12), (3, 11), (3, 10), (3, 9), (3, 8), (3, 7), (2, 7), (1, 7), (1, 8), (1, 9), (1, 10), (1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (2, 15), (3, 15), (4, 15), (5, 15), (6, 15), (7, 15)]

@@ -1,0 +1,146 @@
+Vocabulary (incl. <END>): ['cat', 'dog', 'mat', 'on', 'park', 'ran', 'rug', 'sat', 'the', 'to', '<END>'] |V|=11
+
+=== Q3: first-order CPT ===
+P(next | <START>): the=1.000
+    zero-probability next words: ['cat', 'dog', 'mat', 'on', 'park', 'ran', 'rug', 'sat', 'to', '<END>']
+P(next | the): cat=0.250, dog=0.250, mat=0.167, rug=0.167, park=0.167
+    zero-probability next words: ['on', 'ran', 'sat', 'the', 'to', '<END>']
+P(next | cat): sat=0.667, ran=0.333
+    zero-probability next words: ['cat', 'dog', 'mat', 'on', 'park', 'rug', 'the', 'to', '<END>']
+P(next | dog): sat=0.667, ran=0.333
+    zero-probability next words: ['cat', 'dog', 'mat', 'on', 'park', 'rug', 'the', 'to', '<END>']
+P(next | sat): on=1.000
+    zero-probability next words: ['cat', 'dog', 'mat', 'park', 'ran', 'rug', 'sat', 'the', 'to', '<END>']
+P(next | ran): to=1.000
+    zero-probability next words: ['cat', 'dog', 'mat', 'on', 'park', 'ran', 'rug', 'sat', 'the', '<END>']
+P(next | on): the=1.000
+    zero-probability next words: ['cat', 'dog', 'mat', 'on', 'park', 'ran', 'rug', 'sat', 'to', '<END>']
+P(next | to): the=1.000
+    zero-probability next words: ['cat', 'dog', 'mat', 'on', 'park', 'ran', 'rug', 'sat', 'to', '<END>']
+P(next | mat): <END>=1.000
+    zero-probability next words: ['cat', 'dog', 'mat', 'on', 'park', 'ran', 'rug', 'sat', 'the', 'to']
+P(next | rug): <END>=1.000
+    zero-probability next words: ['cat', 'dog', 'mat', 'on', 'park', 'ran', 'rug', 'sat', 'the', 'to']
+P(next | park): <END>=1.000
+    zero-probability next words: ['cat', 'dog', 'mat', 'on', 'park', 'ran', 'rug', 'sat', 'the', 'to']
+
+=== Normalisation test: sum_v P(v|w) for every context ===
+first-order: 11 contexts, min=1.000000000000 max=1.000000000000 all close to 1: True
+second-order: 15 contexts, min=1.000000000000 max=1.000000000000 all close to 1: True
+   <START> 1.0
+   the 1.0
+   cat 1.0
+   sat 1.0
+   on 1.0
+   mat 1.0
+   rug 1.0
+   dog 1.0
+   ran 1.0
+   to 1.0
+   park 1.0
+
+=== Next-word prediction (argmax) for first-order model ===
+argmax P(w|the) = cat   dist={'cat': 0.25, 'mat': 0.167, 'rug': 0.167, 'dog': 0.25, 'park': 0.167}
+argmax P(w|cat) = sat   dist={'sat': 0.667, 'ran': 0.333}
+argmax P(w|dog) = sat   dist={'sat': 0.667, 'ran': 0.333}
+argmax P(w|sat) = on   dist={'on': 1.0}
+argmax P(w|ran) = to   dist={'to': 1.0}
+argmax P(w|on) = the   dist={'the': 1.0}
+argmax P(w|to) = the   dist={'the': 1.0}
+
+=== Unseen context ===
+dist('banana') = {} -> sample: None
+
+=== 20 sampled sentences (first-order, seed 0) ===
+   the dog sat on the mat
+   the rug
+   the rug
+   the dog sat on the dog ran to the park
+   the cat sat on the park
+   the mat
+   the cat ran to the dog sat on the cat sat on the rug
+   the dog sat on the rug
+   the rug
+   the dog sat on the dog sat on the rug
+   the cat sat on the cat ran to the park
+   the rug
+   the mat
+   the park
+   the rug
+   the park
+   the cat sat on the park
+   the cat sat on the dog sat on the cat sat on the dog sat on the rug
+   the park
+   the park
+
+=== Mode A (greedy) vs Mode B (sampling), 5 sentences each, first-order ===
+Greedy:
+   the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on the cat
+   the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on the cat
+   the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on the cat
+   the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on the cat
+   the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on the cat
+Sampling:
+   the cat ran to the rug
+   the cat sat on the rug
+   the park
+   the dog ran to the dog ran to the park
+   the dog sat on the mat
+
+=== Second-order CPTs ===
+P(next | <START> <START>): the=1.000
+    zero-probability next words: ['cat', 'dog', 'mat', 'on', 'park', 'ran', 'rug', 'sat', 'to', '<END>']
+P(next | <START> the): cat=0.500, dog=0.500
+    zero-probability next words: ['mat', 'on', 'park', 'ran', 'rug', 'sat', 'the', 'to', '<END>']
+P(next | the cat): sat=0.667, ran=0.333
+    zero-probability next words: ['cat', 'dog', 'mat', 'on', 'park', 'rug', 'the', 'to', '<END>']
+P(next | the dog): sat=0.667, ran=0.333
+    zero-probability next words: ['cat', 'dog', 'mat', 'on', 'park', 'rug', 'the', 'to', '<END>']
+P(next | cat sat): on=1.000
+    zero-probability next words: ['cat', 'dog', 'mat', 'park', 'ran', 'rug', 'sat', 'the', 'to', '<END>']
+P(next | dog ran): to=1.000
+    zero-probability next words: ['cat', 'dog', 'mat', 'on', 'park', 'ran', 'rug', 'sat', 'the', '<END>']
+P(next | on the): mat=0.500, rug=0.500
+    zero-probability next words: ['cat', 'dog', 'on', 'park', 'ran', 'sat', 'the', 'to', '<END>']
+P(next | to the): park=1.000
+    zero-probability next words: ['cat', 'dog', 'mat', 'on', 'ran', 'rug', 'sat', 'the', 'to', '<END>']
+
+=== 20 sampled sentences (second-order, seed 0) ===
+   the dog sat on the mat
+   the cat sat on the mat
+   the cat ran to the park
+   the dog ran to the park
+   the dog sat on the rug
+   the dog sat on the mat
+   the cat sat on the rug
+   the dog sat on the rug
+   the dog ran to the park
+   the dog sat on the rug
+   the cat sat on the mat
+   the dog ran to the park
+   the cat ran to the park
+   the cat sat on the rug
+   the cat sat on the rug
+   the dog sat on the mat
+   the dog ran to the park
+   the dog sat on the mat
+   the cat sat on the rug
+   the cat sat on the mat
+Second-order greedy x5:
+   the cat sat on the mat
+   the cat sat on the mat
+   the cat sat on the mat
+   the cat sat on the mat
+   the cat sat on the mat
+
+=== Comparison ===
+first-order: parameters (non-zero CPT entries)=17, observed contexts=11, possible contexts=11, unobserved contexts=0 (0%), full CPT size=121, distinct sentences in 5000 samples=482, novel (not in training)=476
+   novel examples: ['the cat ran to the cat ran to the cat sat on the cat sat on the dog ran to the mat', 'the cat ran to the cat ran to the cat sat on the dog sat on the cat ran to the park', 'the cat ran to the cat ran to the cat sat on the mat', 'the cat ran to the cat ran to the cat sat on the rug', 'the cat ran to the cat ran to the dog ran to the dog ran to the cat sat on the park', 'the cat ran to the cat ran to the dog sat on the cat ran to the cat ran to the rug']
+second-order: parameters (non-zero CPT entries)=19, observed contexts=15, possible contexts=121, unobserved contexts=106 (88%), full CPT size=1331, distinct sentences in 5000 samples=6, novel (not in training)=0
+   novel examples: []
+Training sentences: 6 distinct
+P(sentence) examples:
+   'the cat sat on the mat': first-order=0.02778  second-order=0.16667
+   'the cat ran to the park': first-order=0.01389  second-order=0.16667
+   'the dog ran to the mat': first-order=0.01389  second-order=0.00000
+   'the cat sat on the park': first-order=0.02778  second-order=0.00000

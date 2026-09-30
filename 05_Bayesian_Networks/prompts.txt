@@ -1,0 +1,23 @@
+Prompt 1 (Part V: first-order model)
+Write a simple Python implementation of a first-order autoregressive language model.
+The model should:
+1. take a list of tokenised sentences as training data;
+2. count transitions between consecutive tokens;
+3. construct the conditional distribution P(Xt | Xt-1);
+4. display the probabilities for a specified previous token;
+5. predict the most probable next token;
+6. generate a sentence by repeatedly sampling the next token;
+7. stop when the <END> token is generated.
+Do not use a machine-learning library or a pretrained language model. Use ordinary Python data structures and random sampling.
+Data: the six sentences of the lab, lower-cased, with <START> and <END> added.
+Also add: a check that sum_v P(v|w)=1 for every context, greedy and sampling modes, and handling of unseen contexts.
+
+Prompt 2 (Part XII: second-order model)
+Modify the existing first-order autoregressive model into a second-order model.
+The model should estimate P(Xt | Xt-2, Xt-1).
+Represent the model using counts of observed triples and use these counts to construct conditional probability distributions.
+Do not replace the model with a neural network or a pretrained language model.
+(Before asking: what should change in the model? The context becomes a pair, the sentence is padded with two <START> tokens, the CPT is indexed by pairs.)
+
+Prompt 3 (Part XIII: comparison)
+Compare the two models: number of non-zero CPT entries, observed versus possible contexts, distinct and novel sentences among 5000 samples, and P(sentence) for a few sentences.
